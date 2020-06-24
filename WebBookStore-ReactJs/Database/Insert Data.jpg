@@ -1,0 +1,48 @@
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '123456'
+INSERT INTO `author` (`name`,`authorImage`)
+VALUE
+	('William Shakespeare',"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Shakespeare.jpg/468px-Shakespeare.jpg"),
+    ('Agatha Christie',"https://img.ti-media.net/wp/uploads/sites/46/2015/09/Agatha-Christie-614x920.jpg"),
+    ('Barbara Cartland',"https://pbs.twimg.com/profile_images/976013703719084032/tL9Y1A6Z.jpg"),
+    ('Danielle Steel',"https://www.gstatic.com/tv/thumb/persons/1688/1688_v9_ba.jpg"),
+    ('Harold Robbins',"https://i.pinimg.com/originals/55/6c/09/556c09576cad8f5ad6d17f14c65cc213.jpg"),
+    ('Georges Simenon',"https://www.gstatic.com/tv/thumb/persons/475530/475530_v9_ba.jpg"),
+    ('Enid Blyton',"https://jaydeashe.files.wordpress.com/2013/06/img_4543.jpg"),
+    ('Sidney Sheldon',"https://www.gstatic.com/tv/thumb/persons/59235/59235_v9_ba.jpg"),
+    ('J.K.Rowling',"https://www.gstatic.com/tv/thumb/persons/174909/174909_v9_bb.jpg"),
+    ('Gilbert Patten',"https://credo.library.umass.edu/images/resize/1080/muph061-sl561-i002-001.jpg");
+    
+INSERT INTO `category` (`categoryName`)
+VALUE
+	('Action and adventure'),
+    ('Crime'),
+    ('Drama'),
+    ('Fairytale'),
+    ('Fantasy'),
+    ('Romance'),
+    ('Science fiction'),
+    ('Thriller'),
+    ('Short story'),
+    ('Paranormal romance'),
+    ('Horror'),
+    ('Historical fiction'),
+    ('Fairytale'),
+    ('Comic book');
+INSERT INTO `category` (`categoryName`)
+VALUE('Comedy');
+ 
+INSERT INTO `book` (`title`,`authorID`,`categoryID`,`price`,`describe`,`numberOfPages`,`bookImage`)
+VALUES 
+('Hamlet',90,84,25,'The Tragedy of Hamlet, Prince of Denmark, is a tragedy written by William Shakespeare sometime between 1599 and 1601',344,'https://d4.violet.vn/uploads/blogs/4253/hamlet.jpg'),
+('Othello',90,84,25,'Othello is a tragedy by William Shakespeare, believed to have been written in 1603.',300,'https://img.culturacolectiva.com/content/2017/01/revenge-books-othello.png'),
+('Julius Ceasar',90,84,28,'The Tragedy of Julius Caesar is a history play and tragedy by William Shakespeare first performed in 1599.',239,'https://www.setonbooks.com/sempics/P-EN09-1621093.jpg'),
+('The Merchant of Venice',90,85,40,'The Merchant of Venice is a 16th-century play written by William Shakespeare',173,'https://images-na.ssl-images-amazon.com/images/I/819C0ZpvhJL.jpg');
+
+
+
+INSERT INTO `book` (`title`,`authorID`,`categoryID`,`price`,`describe`,`numberOfPages`,`bookImage`)
+VALUES 
+('Fantastic Beasts and Where to Find Them',107,72,50,'Fantastic Beasts and Where to Find Them is a 2001 guide book written by British author J. K. Rowling about the magical creatures in the Harry Potter universe.',128,'https://lostpurplequill.files.wordpress.com/2016/11/pale-highway6.jpg'),
+("Harry Potter and the Philosopher's Stone",107,74,50,"Harry Potter and the Philosopher's Stone is a fantasy novel written by British author J. K. Rowling",223,'https://media.bloomsbury.com/rep/bj/9781408855652.jpeg'),
+("Harry Potter and the Deathly Hallows",107,77,45,"Harry Potter and the Deathly Hallows is a fantasy novel written by British author J. K. Rowling",607,"https://images-na.ssl-images-amazon.com/images/I/71sH3vxziLL.jpg"),
+("Lethal White",107,71,30,"Lethal White is the fourth novel in the Cormoran Strike series, written by J. K. Rowling",656,"https://images-na.ssl-images-amazon.com/images/I/91qWWm0iVML.jpg")
