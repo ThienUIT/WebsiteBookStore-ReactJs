@@ -37,7 +37,6 @@ class IndexCart extends Component {
         return total
     }
     DeleteFromCart = (book) => {
-        console.log(book)
         this.props.onDelete(book);
     }
     render() {

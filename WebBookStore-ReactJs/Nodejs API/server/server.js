@@ -1,11 +1,13 @@
 const express = require('express');
 
+
 //express-session
 const session = require('express-session')
 
 const userRouter = require('./api/users/user.router');
 const authorRouter = require('./api/author/author.router')
 const bookRouter = require('./api/Book/book.router')
+const categoryRouter = require('./api/category/category.router')
 
 const TWO_HOURS = 1000 * 60 * 60 * 2
 const {
@@ -35,6 +37,7 @@ app.use(session({
 app.use('/api/users', userRouter);
 app.use('/api/authors',authorRouter);
 app.use('/api/allbook',bookRouter);
+app.use('/api/category', categoryRouter);
 
  app.listen(process.env.PORT || '5000', () => {
      console.log(`Server started on port: ${process.env.PORT || '5000'}`);

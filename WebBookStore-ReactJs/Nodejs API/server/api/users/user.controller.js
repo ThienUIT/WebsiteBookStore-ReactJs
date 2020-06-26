@@ -49,7 +49,7 @@ module.exports = {
                 });
             }
             const result = compareSync(body.password, results.passWord);
-            if(results){
+            if(result){
                 results.passWord = undefined;
                 const jsontoken = sign({ result: results }, " qwe1235 ",{
                     expiresIn: "1h"

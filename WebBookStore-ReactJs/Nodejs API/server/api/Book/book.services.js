@@ -10,5 +10,25 @@ bookdb.getBook = callback =>{
         return callback(null, results[0])
     })
 }
+bookdb.createBook = (data, callback) =>{
+    pool.query(
+        "INSERT INTO book (`title`, `authorID`, `categoryID`,`price` ,`describe`, `numberOfPages`,`bookImage`) VALUES (?,?,?,?,?,?,?) ",
+        [
+            data.title,
+            data.authorID,
+            data.categoryID,
+            data.price,
+            data.describe,
+            data.numberOfPages,
+            data.bookImage
+        ],
+        (err, results, fields) =>{
+            if(err){
+                return callback(err)
+            }
+            return callback(null, results)
+        }
+    )
+}
 
 module.exports = bookdb

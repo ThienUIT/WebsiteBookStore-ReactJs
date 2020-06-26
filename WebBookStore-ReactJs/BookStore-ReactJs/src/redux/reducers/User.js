@@ -1,19 +1,11 @@
-
-const InitialState = [
-    {
-        id:1,
-        username: 'admin',
-        password: 'admin'
-    },
-    {
-        id:2,
-        username: 'user',
-        password: 'user'
-    }
-]
+import {FETCH_USERDATA} from '../actiontypes/ActionTypes'
+const InitialState = []
 
 export default function User(state = InitialState, action){
     switch(action.type){
+        case FETCH_USERDATA:
+            state = action.users
+            return [...state]
         default:
             return [...state];
     }

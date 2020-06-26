@@ -73,7 +73,7 @@ class IndexProduct extends Component {
                                 top 
                                 src={book.bookImage} 
                                 alt="..."/>
-                            <CardBody>
+                            <CardBody style={{height:"296px"}}>
                                 <CardTitle><h3>{book.title}</h3></CardTitle>
                                 <br></br>
                                 <CardText className="card-text">Author: {book.name}</CardText>

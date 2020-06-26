@@ -5,6 +5,11 @@ import { Container, Row, Col, Nav, NavItem, NavLink, Button, Collapse, Card, Car
 import { connect } from 'react-redux'
 import { actFetchAllBookDataRequest } from 'redux/actions/FetchBookData'
 import AddBookModal from 'views/Modal/AddBookModal'
+import { actFetchAuthorDataRequest } from 'redux/actions/FetchAuthorData'
+import AuthorLayout from './AuthorLayout'
+import UpdateBookModal from 'views/Modal/UpdateBookModal'
+import { transpileModule } from 'typescript'
+import { actFetchCategoryDataRequest } from 'redux/actions/FetchCategoryData'
 
 class IndexAdmin extends Component {
     constructor(props){
@@ -13,19 +18,28 @@ class IndexAdmin extends Component {
             activeTab : '1',
             quantity:1,
             isOpen:false,
-            setModal:false
+            setModal:false,
+            setUpdateModal : false,
+            Book : null
         }
     }
     componentDidMount(){
         this.props.fetchAllBook()
+        this.props.fetchAllAuthor()
+        this.props.fetchCategory()
     }
     onSetModal = value =>{
         this.setState({
             setModal : value
         })
     }
+    onSetUpdateModal = value =>{
+        this.setState({
+            setUpdateModal : value
+        })
+    }
     render() {
-        var { AllBook } = this.props
+        var { AllBook, AllAuthor } = this.props
         const toggle = tab =>{
             if(this.state.activeTab !== tab){
                 this.setState({
@@ -47,9 +61,10 @@ class IndexAdmin extends Component {
                             alt="..."
                             className="img-rounded img-no-padding img-responsive"
                             src={book.bookImage}
+                            style={{height:"88.96px",width:"70px"}}
                         />
                     </td>
-                    <td style={{verticalAlign:"middle"}}>{book.title}</td>
+                    <td style={{verticalAlign:"middle", width:"300px"}}>{book.title}</td>
                     <td style={{verticalAlign:"middle"}}>{book.price} $</td>
                     <td style={{verticalAlign:"middle"}}>
                         <Button 
@@ -60,14 +75,23 @@ class IndexAdmin extends Component {
                          <Button 
                             color="success" 
                             size="sm"
-                            // onClick = {()=>this.DeleteFromCart(book.book)}
+                            onClick = { () => setUpdateBookModal(true, book) }
                         > Update </Button>
                     </td>
                     </tr>
+                   
                 </tbody>
         })
+        const setUpdateBookModal = (params, book) =>{
+            this.setState({
+                Book : book,
+                setUpdateModal: params
+            },()=>{
+                console.log(this.state.Book)
+            })
+            
+        }
         const setAddBookModal = (params) =>{
-            console.log(params)
             this.setState({
                 setModal : params
             })
@@ -115,7 +139,7 @@ class IndexAdmin extends Component {
                                                 >
                                                         Add book
                                                 </Button>
-                                                <AddBookModal setModal = { this.state.setModal } onSetModal = {this.onSetModal} />
+                                                
                                                 <br />
                                                 <Button 
                                                     style={{marginBottom:"5px"}} 
@@ -139,6 +163,7 @@ class IndexAdmin extends Component {
                                                 onClick={() => {
                                                 toggle("1");
                                                 }}
+                                                style={{cursor:"pointer",fontWeight:"bold"}}
                                             >
                                                 Book
                                             </NavLink>
@@ -149,6 +174,7 @@ class IndexAdmin extends Component {
                                                 onClick={() => {
                                                 toggle("2");
                                                 }}
+                                                style={{cursor:"pointer",fontWeight:"bold"}}
                                             >
                                                 Author
                                             </NavLink>
@@ -172,15 +198,28 @@ class IndexAdmin extends Component {
                                         </Table>    
                                     </TabPane>
                                     <TabPane className="text-center" tabId="2" id="following">
-                                    <h3 className="text-muted">Not following anyone yet :(</h3>
-                                    <Button className="btn-round" color="warning">
-                                        Find artists
-                                    </Button>
+                                    {/* <h3 className="text-muted">Not following anyone yet :(</h3> */}
+                                        <Table borderless hover>
+                                            <thead>
+                                                <tr>
+                                                <th>#</th>
+                                                <th></th>
+                                                <th>Name</th>
+                                                </tr>
+                                            </thead>
+                                            <AuthorLayout allAuthor = { AllAuthor } />
+                                        </Table>    
                                     </TabPane>                                    
                                 </TabContent>
                             </Col>
                         </Row>
                     </Container>
+                    <UpdateBookModal 
+                        setModal = {this.state.setUpdateModal} 
+                        onSetUpdateModal = {this.onSetUpdateModal}
+                        book = {this.state.Book}                   
+                    />
+                    <AddBookModal setModal = { this.state.setModal } onSetModal = {this.onSetModal} />
                 </div>
             </>
         )
@@ -188,7 +227,9 @@ class IndexAdmin extends Component {
 }
 const mapStateToProps = state =>{
     return {
-        AllBook: state.AllBook
+        AllBook: state.AllBook,
+        AllAuthor : state.AllAuthor,
+        Category : state.Category,
     }
 }
 
@@ -196,6 +237,12 @@ const mapDispatchToProps = dispatch =>{
     return {
         fetchAllBook : () =>{
             dispatch(actFetchAllBookDataRequest())
+        },
+        fetchAllAuthor : () =>{
+            dispatch(actFetchAuthorDataRequest())
+        },
+        fetchCategory : () =>{
+            dispatch(actFetchCategoryDataRequest())
         }
     }
 }
