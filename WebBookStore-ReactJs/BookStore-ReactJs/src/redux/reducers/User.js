@@ -1,4 +1,5 @@
 import {FETCH_USERDATA} from '../actiontypes/ActionTypes'
+
 const InitialState = []
 
 export default function User(state = InitialState, action){

@@ -1,5 +1,8 @@
-import {FETCH_USERDATA} from '../actiontypes/ActionTypes'
+import {FETCH_USERDATA, SET_CURRENT_USER, LOGIN_FAIL, LOG_OUT} from '../actiontypes/ActionTypes'
 import CallApi from 'Utils/ApiCaller'
+import jwt from 'jsonwebtoken'
+
+const FAILED = 'Invalid Username or Password' 
 
 export const actFetchUserData = users =>{
     return {
@@ -13,5 +16,39 @@ export const actFetchUserDataRequest = () =>{
         return CallApi("users", "GET", null).then(response =>{
             dispatch(actFetchUserData(response.data.data))
         })
+    }
+}
+
+export const setCurrentUser = user =>{
+    return {
+        type: SET_CURRENT_USER,
+        user
+    }
+}
+export const loginFailed = message =>{
+    return{
+        type: LOGIN_FAIL,
+        message
+    }
+}
+
+export const actLogin = ( user ) =>{
+    return dispatch =>{
+        return CallApi("users/login", 'POST', user).then(res =>{
+            if(res.data.token){
+                const token = res.data.token;
+                localStorage.setItem('jwtToken', token)
+                dispatch(setCurrentUser(jwt.decode(token).result))
+            }
+            else dispatch(loginFailed(FAILED))
+        })
+    }
+}
+
+
+export const actLogout = () =>{
+    return dispatch =>{
+        localStorage.removeItem('jwtToken');
+        dispatch(setCurrentUser({}))
     }
 }

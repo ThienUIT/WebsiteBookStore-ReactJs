@@ -120,7 +120,7 @@ class RegisterPage extends React.Component {
             <Row>
               <Col className="ml-auto mr-auto" lg="4">
                 <Card className="card-register ml-auto mr-auto">
-                  <h3 className="title mx-auto">Welcome</h3>
+                  <h3 className="title mx-auto">Register</h3>
                   <div className="social-line text-center">
                     <Button
                       className="btn-neutral btn-just-icon mr-1"

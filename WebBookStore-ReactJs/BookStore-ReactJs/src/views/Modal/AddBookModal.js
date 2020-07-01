@@ -12,7 +12,7 @@ class AddBookModal extends Component {
             txtTitle : "",
             txtAuthor: "",
             txtCategory: "",
-            txtPrice: 0,
+            txtPrice: "",
             txtDescribe: "",
             txtNumberOfPages: "",
             txtLinkImage:""

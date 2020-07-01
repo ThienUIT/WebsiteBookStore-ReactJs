@@ -40,6 +40,8 @@ class IndexCart extends Component {
         this.props.onDelete(book);
     }
     render() {
+        var { Auth } = this.props
+        console.log(Auth)
         const toggle = tab =>{
             if(this.state.activeTab !== tab){
                 this.setState({
@@ -65,7 +67,7 @@ class IndexCart extends Component {
                         </div>
                         <div className="name">
                         <h4 className="title">
-                            Administrator <br />
+                            { Auth.isAuthenticate ? Auth.user.displayName : "Guest"} <br />
                         </h4>
                         </div>
                     </div>
@@ -211,7 +213,8 @@ class IndexCart extends Component {
 
 const mapStateToProps = state =>{
     return {
-        BookCart: state.BookCart
+        BookCart: state.BookCart,
+        Auth: state.Auth
     }
 }
 const mapDispatchToProps = dispatch =>{

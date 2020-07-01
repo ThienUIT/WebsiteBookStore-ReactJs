@@ -30,13 +30,12 @@ import {
   UncontrolledDropdown,
   DropdownToggle,
   DropdownItem,
-  DropdownMenu,
-  Button,
-  // NavLink
+  DropdownMenu
 } from "reactstrap";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-
+import { actLogout } from "redux/actions/FetchUserData";
+import jwt from 'jsonwebtoken'
 // helper function
 const ShowQuantity = (cart) => {
   var result = 0;
@@ -50,9 +49,10 @@ const ShowQuantity = (cart) => {
 
 const ShowUser = () => {
   var userName = "Guest";
-  if (localStorage.length > 0 ) {
-        var account = JSON.parse(localStorage.getItem("admin"))
-        userName = account.username;
+  if (localStorage.length > 0) {
+        var data = localStorage.getItem('jwtToken')
+        var user = jwt.decode(data).result
+        userName = user.displayName;
         return `Hello ${userName}`
   }
   return userName
@@ -69,8 +69,8 @@ function IndexNavbar(props) {
   const [isChange, setChange] = React.useState(false)
 
   const onclicked = () =>{
-      localStorage.removeItem("admin")
-      setChange(!isChange);
+    props.actLogOut()
+    setChange(!isChange);
   }
   
   const toggleNavbarCollapse = () => {
@@ -167,6 +167,7 @@ function IndexNavbar(props) {
                             className="dropdown-item"
                             data-placement="bottom"
                             to="/login-page"
+                            style = { ( localStorage.length > 0 ) ? { pointerEvents: "none" } : {} }
                         >
                             Login
                         </Link>
@@ -211,4 +212,12 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, null)(IndexNavbar);
+const mapDispatchToProps = dispatch =>{
+  return {
+    actLogOut: () =>{
+      dispatch(actLogout())
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(IndexNavbar);

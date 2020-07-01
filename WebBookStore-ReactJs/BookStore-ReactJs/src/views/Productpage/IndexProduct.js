@@ -14,13 +14,15 @@ import {
     UncontrolledDropdown,
     DropdownToggle,
     DropdownMenu,
-    DropdownItem
+    DropdownItem,
+    FormGroup,
+    Label,
+    Input
 } from 'reactstrap'
 import { connect } from 'react-redux'
 import { actFetchAllBookDataRequest } from 'redux/actions/FetchBookData'
 import { actAddToCart } from 'redux/actions/Cart'
 import DemoFooter from 'components/Footers/DemoFooter'
-import { createRegularExpressionLiteral } from 'typescript'
 
 
 class IndexProduct extends Component {
@@ -52,6 +54,11 @@ class IndexProduct extends Component {
                     id:5,
                     Quote: "“Rainy days should be spent at home with a cup of tea and a good book.”",
                     Author: "- Bill Patterson -"
+                },
+                {
+                    id:6,
+                    Quote:"“No pen no gain.”",
+                    Author:"- Huan Rose -"
                 }
             ]
         }
@@ -64,7 +71,12 @@ class IndexProduct extends Component {
     addToCart = book =>{
         this.props.onAddToCart(book)
     }
+    test(){
+        console.log(document.getElementById('exampleRadios1').checked);
+   }
     render() {
+      
+      
         var data = this.props.AllBook
         const elm = data.map((book,index)=>{
             return <Col key={book.bookID}>
@@ -110,35 +122,84 @@ class IndexProduct extends Component {
                         <Col className="ml-auto mr-auto text-center" md="6">
                         {RandomQoutes(this.state.Quotes)}
                         <br />
+                        <br />
                         </Col>
                     </Row>
-                    <UncontrolledDropdown className="btn-group">
-                        <DropdownToggle
-                        aria-expanded={false}
-                        aria-haspopup={true}
-                        caret
-                        color="secondary"
-                        data-toggle="dropdown"
-                        type="button"
-                        >
-                        Category
-                        </DropdownToggle>
-                        <DropdownMenu>
-                        <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
-                            Action
-                        </DropdownItem>
-                        <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
-                            Another action
-                        </DropdownItem>
-                        <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
-                            Something else here
-                        </DropdownItem>
-                        <DropdownItem divider />
-                        <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
-                            Separated link
-                        </DropdownItem>
-                        </DropdownMenu>
-                    </UncontrolledDropdown>
+                    <Row>
+                        <Col>
+                            <UncontrolledDropdown className="btn-group">
+                                <DropdownToggle
+                                aria-expanded={false}
+                                aria-haspopup={true}
+                                caret
+                                color="secondary"
+                                data-toggle="dropdown"
+                                type="button"
+                                >
+                                Category
+                                </DropdownToggle>
+                                <DropdownMenu>
+                                <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
+                                    Action
+                                </DropdownItem>
+                                <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
+                                    Another action
+                                </DropdownItem>
+                                <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
+                                    Something else here
+                                </DropdownItem>
+                                <DropdownItem divider />
+                                <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
+                                    Separated link
+                                </DropdownItem>
+                                </DropdownMenu>
+                            </UncontrolledDropdown>
+                        </Col>
+                        <Col >
+                            <h6>Sort by name</h6>
+                            <div className="form-check-radio">
+                                <Label check>
+                                <Input type="radio" name="sortByNameRadios" id="exampleRadios1" value="option1"defaultChecked/>
+                                    A to Z
+                                <span className="form-check-sign"></span>
+                                </Label>
+                            </div>
+                            <div className="form-check-radio">
+                                <Label check>
+                                <Input type="radio" name="sortByNameRadios" id="exampleRadios2" value="option2" />
+                                    Z to A
+                                <span className="form-check-sign"></span>
+                                </Label>
+                            </div>
+                        </Col>
+                        <Col>
+                            <h6>Sort by price</h6>
+                            <div className="form-check-radio">
+                                    <Label check>
+                                        <Input type="radio" name="exampleRadios" id="exampleRadios1" value="option3" defaultChecked/>
+                                        High to low
+                                        <span className="form-check-sign"></span>
+                                    </Label>
+                                </div>
+                                <div className="form-check-radio">
+                                    <Label check>
+                                    <Input type="radio" name="exampleRadios" id="exampleRadios2" value="option4" />
+                                    Low to high
+                                    <span className="form-check-sign"></span>
+                                    </Label>
+                            </div>
+                        </Col>
+                        <Col style={{textAlign: "center"}}>
+                            <Button color="success" style={{marginBottom:"5px"}} onClick={this.test}>
+                                <i className="fa fa-search"></i>
+                                Search
+                            </Button>
+                            <br />
+                            <Button color="primary">
+                                Refresh
+                            </Button>
+                        </Col>
+                    </Row>
                     <hr></hr>
                     <Row>
                        {elm}

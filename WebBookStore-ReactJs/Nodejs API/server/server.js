@@ -1,9 +1,10 @@
 const express = require('express');
 
-
+// biến môi trường env
+//require('dotenv').config();
 //express-session
 const session = require('express-session')
-
+//express - validator
 const userRouter = require('./api/users/user.router');
 const authorRouter = require('./api/author/author.router')
 const bookRouter = require('./api/Book/book.router')
@@ -22,6 +23,8 @@ const IN_PROD = NODE_ENV === 'production'
 const app = express();
 
 app.use(express.json());
+
+
 app.use(session({
     name: SESS_NAME,
     resave: false,
@@ -36,8 +39,9 @@ app.use(session({
 
 app.use('/api/users', userRouter);
 app.use('/api/authors',authorRouter);
-app.use('/api/allbook',bookRouter);
+app.use('/api/allbook' ,bookRouter);
 app.use('/api/category', categoryRouter);
+
 
  app.listen(process.env.PORT || '5000', () => {
      console.log(`Server started on port: ${process.env.PORT || '5000'}`);

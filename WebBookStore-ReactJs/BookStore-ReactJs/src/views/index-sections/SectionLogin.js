@@ -1,26 +1,26 @@
-	import React from "react";
-
-	// reactstrap components
-	import {
-	Button,
-	Card,
-	Form,
-	Input,
-	InputGroupAddon,
-	InputGroupText,
-	InputGroup,
-	Container,
-	Row,
-	Col,
-	} from "reactstrap";
-	import IndexNavbar from "components/Navbars/IndexNavbar";
-	import { connect } from "react-redux";
-	import CallApi from "Utils/ApiCaller";
-	import { Redirect } from "react-router";
+import React from "react";
+import jwt from 'jsonwebtoken'
+// reactstrap components
+import {
+Button,
+Card,
+Form,
+Input,
+InputGroupAddon,
+InputGroupText,
+InputGroup,
+Container,
+Row,
+Col,
+} from "reactstrap";
+import IndexNavbar from "components/Navbars/IndexNavbar";
+import { connect } from "react-redux";
+import { Redirect } from "react-router";
+import { actLogin } from "redux/actions/FetchUserData";
 
 	// core components
 
-	class SectionLogin extends React.Component {
+class SectionLogin extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -39,34 +39,27 @@
 	};
 	onHandleSubmit = (e) => {
 		e.preventDefault();
-		CallApi("users/login", "POST", {
+		const user = {
 			username: this.state.txtName,
 			password: this.state.txtPassword
-		}).then((res) => {
-			if(res.data.token){
-				localStorage.setItem("admin",JSON.stringify({
-					username: this.state.txtName,
-					password: this.state.txtPassword
-				}));
-				this.setState({
-					isRedirect: true
-				});
-			}
-			else {
-				alert(res.data.data)
-			}
-		});
+		}
+		this.props.actLogin(user)
+		this.setState({
+			isRedirect: true
+		})
 	};
 	
 	render() {
 		var { txtName, txtPassword, isRedirect } = this.state;
-		var admin = JSON.parse(localStorage.getItem("admin"));
 		if(isRedirect){
-			if(admin.username === "admin"){
-				return <Redirect to="/admin-page"></Redirect>
-			}
-			else{
-				return <Redirect to = "/product-page"></Redirect>
+			if(localStorage.length > 0){
+				var token = localStorage.getItem('jwtToken')
+				var user = jwt.decode(token)
+				if(user.result.userName === 'admin')
+				{
+					return <Redirect to = 'admin-page'></Redirect>
+				}
+				else return <Redirect to = 'product-page'></Redirect>
 			}
 		}
 		return (
@@ -177,12 +170,21 @@
 		</>
 		);
 	}
-	}
+}
+
 
 	const mapStateToProps = (state) => {
 		return {
-			user: state.User,
+			Auth: state.Auth
 		};
 	};
 
-	export default connect(mapStateToProps, null)(SectionLogin);
+	const mapDispatchToProps = dispatch =>{
+		return {
+			actLogin : (user) =>{
+				dispatch(actLogin(user))
+			}
+		}
+	}
+
+	export default connect(mapStateToProps, mapDispatchToProps)(SectionLogin);

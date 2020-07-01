@@ -4,5 +4,6 @@ import BookCart from './BookCart'
 import User from './User'
 import AllAuthor from './AllAuthor'
 import Category from './Category'
+import Auth from './Auth'
 
-export default combineReducers({AllBook, BookCart, User, AllAuthor, Category});
+export default combineReducers({AllBook, BookCart, User, AllAuthor, Category, Auth});
