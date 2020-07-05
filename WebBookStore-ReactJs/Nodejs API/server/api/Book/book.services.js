@@ -8,7 +8,20 @@ bookdb.getBook = callback =>{
             return callback(err)
         }
         return callback(null, results[0])
-    })
+    });
+}
+
+bookdb.getBookById = (data, callback) => {
+    pool.query(
+        'call USP_Get_Book_By_Id(?)',
+        [Id],
+        (err, results) => {
+            if(err){
+                return callback(err)
+            }
+            return callback(null, results)
+        }
+    );
 }
 
 bookdb.createBook = (data, callback) =>{

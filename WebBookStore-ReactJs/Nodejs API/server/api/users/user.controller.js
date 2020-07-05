@@ -12,14 +12,11 @@ module.exports = {
         create( body, (err, results)=>{
             if(err){
                 console.log(err);
-                return res.status(500).json({
-                    success: 0,
-                    message: "Database connetion error"
-                });
+                return;
             }
             return res.status(200).json({
                 success: 1,
-                data: results
+                message: 'Create account with order successfully'
             });
         } )
     },
@@ -31,6 +28,19 @@ module.exports = {
             }
             return  res.json({
                 success: 1,
+                data: results
+            });
+        })
+    },
+    getUserByUsername: (req, res) =>{
+        const body = req.body;
+        getUserByUsername(body.username,(err, results)=>{
+            if(err){
+                console.log(err);
+                return;
+            }
+            return  res.json({
+                success: 0,
                 data: results
             });
         })

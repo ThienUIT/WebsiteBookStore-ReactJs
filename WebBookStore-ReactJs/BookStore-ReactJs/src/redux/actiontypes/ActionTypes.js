@@ -1,3 +1,4 @@
+
 export const FETCH_BOOKDATA = "FETCH_BOOKDATA";
 export const ADD_TO_CART = "ADD_TO_CART";
 export const UPDATE_QUANTITY = "UPDATE_QUANTITY"
@@ -9,3 +10,4 @@ export const FETCH_USERDATA = "FETCH_USERDATA"
 export const SET_CURRENT_USER = "SET_CURRENT_USER"
 export const LOGIN_FAIL = "LOGIN_FAIL"
 export const LOG_OUT = "LOG_OUT"
+export const RELOAD_CART = "RELOAD_CART"

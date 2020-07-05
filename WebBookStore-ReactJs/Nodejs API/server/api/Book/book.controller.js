@@ -1,4 +1,4 @@
-const { getBook, createBook, updateBook, deleteBook, searchBook } = require('./book.services');
+const { getBook, createBook, updateBook, deleteBook, searchBook, getBookById } = require('./book.services');
 const { isEmpty } = require('lodash')
 
 const bookController = {}
@@ -9,7 +9,29 @@ bookController.getBook = (req, res) =>{
             console.log(err);
             return;
         }
-        return  res.json(results);
+        return res.json(results);
+    })
+}
+
+bookController.getBookById = (req, res) => {
+    Id = parseInt(req.params.id)
+    getBookById(Id, (err, results)=>{
+        if(err){
+            console.log(err);
+            return;
+        }
+        if(isEmpty(results[0])){
+            res.status(200).json({
+                success:1,
+                message:"Record not found"
+            });
+        }
+        else{
+                return res.status(200).json({
+                    success: 1,
+                    data: results[0]
+                });
+        }
     })
 }
 

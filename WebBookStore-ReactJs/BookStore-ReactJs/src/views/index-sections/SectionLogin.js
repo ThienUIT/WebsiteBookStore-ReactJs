@@ -43,16 +43,17 @@ class SectionLogin extends React.Component {
 			username: this.state.txtName,
 			password: this.state.txtPassword
 		}
-		this.props.actLogin(user)
-		this.setState({
-			isRedirect: true
+		this.props.actLogin(user, (token) => {
+			this.setState({
+				isRedirect: true
+			})
 		})
-	};
 	
+	};
 	render() {
 		var { txtName, txtPassword, isRedirect } = this.state;
 		if(isRedirect){
-			if(localStorage.length > 0){
+			if(localStorage.getItem('jwtToken') !== null){
 				var token = localStorage.getItem('jwtToken')
 				var user = jwt.decode(token)
 				if(user.result.userName === 'admin')
@@ -181,8 +182,8 @@ class SectionLogin extends React.Component {
 
 	const mapDispatchToProps = dispatch =>{
 		return {
-			actLogin : (user) =>{
-				dispatch(actLogin(user))
+			actLogin : (user, callback) =>{
+				dispatch(actLogin(user, callback))
 			}
 		}
 	}

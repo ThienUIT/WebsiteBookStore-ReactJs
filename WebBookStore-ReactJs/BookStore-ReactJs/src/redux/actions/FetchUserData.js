@@ -32,13 +32,16 @@ export const loginFailed = message =>{
     }
 }
 
-export const actLogin = ( user ) =>{
+export const actLogin = ( user, callback ) =>{
     return dispatch =>{
         return CallApi("users/login", 'POST', user).then(res =>{
             if(res.data.token){
                 const token = res.data.token;
                 localStorage.setItem('jwtToken', token)
                 dispatch(setCurrentUser(jwt.decode(token).result))
+                if(typeof(callback) === "function" ){
+                    callback(res.data.token)
+                }
             }
             else dispatch(loginFailed(FAILED))
         })

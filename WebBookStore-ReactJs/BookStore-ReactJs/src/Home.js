@@ -44,7 +44,6 @@ export default class Home extends React.Component {
                 </Route>
                 <Route
                     path="/register-page"
-                   
                 >
                     <RegisterPage />
                 </Route>

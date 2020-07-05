@@ -15,7 +15,6 @@ import {
     DropdownToggle,
     DropdownMenu,
     DropdownItem,
-    FormGroup,
     Label,
     Input
 } from 'reactstrap'
@@ -23,12 +22,15 @@ import { connect } from 'react-redux'
 import { actFetchAllBookDataRequest } from 'redux/actions/FetchBookData'
 import { actAddToCart } from 'redux/actions/Cart'
 import DemoFooter from 'components/Footers/DemoFooter'
+import { isEmpty } from 'lodash'
+import BookCart from 'redux/reducers/BookCart'
 
 
 class IndexProduct extends Component {
     constructor(props){
         super(props)
-        this.state = {    
+        this.state = {
+            isReload: false,    
             Quotes:[
                 {
                     id:1,
@@ -64,7 +66,8 @@ class IndexProduct extends Component {
         }
     }
     componentDidMount(){
-        this.props.fetchAllBook()
+        this.props.fetchAllBook();
+        // window.location.reload(false)
     }
 
 
@@ -75,9 +78,11 @@ class IndexProduct extends Component {
         console.log(document.getElementById('exampleRadios1').checked);
    }
     render() {
-      
-      
         var data = this.props.AllBook
+        var { BookCart } = this.props
+        // do {
+        //     window.location.reload()
+        // }while(isEmpty(BookCart))
         const elm = data.map((book,index)=>{
             return <Col key={book.bookID}>
                         <Card style={{width: '20rem'}}>
@@ -226,7 +231,8 @@ const RandomQoutes = (store) =>{
 
 const mapStateToProps = state =>{
     return {
-        AllBook : state.AllBook
+        AllBook : state.AllBook,
+        BookCart : state.BookCart
     }
 }
 
