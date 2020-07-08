@@ -219,7 +219,10 @@ class IndexAdmin extends Component {
                         onSetUpdateModal = {this.onSetUpdateModal}
                         book = {this.state.Book}                   
                     />
-                    <AddBookModal setModal = { this.state.setModal } onSetModal = {this.onSetModal} />
+                    <AddBookModal 
+                        setModal = { this.state.setModal } 
+                        onSetModal = {this.onSetModal} 
+                    />
                 </div>
             </>
         )

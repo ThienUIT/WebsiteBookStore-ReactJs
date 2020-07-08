@@ -22,7 +22,7 @@ export default class AuthorLayout extends Component {
                             color="success" 
                             size="sm"
                             // onClick = {()=>this.DeleteFromCart(book.book)}
-                        > Update </Button>
+                        > Update</Button>
                     </td>
                     </tr>
                 </tbody>
