@@ -43,5 +43,20 @@ module.exports = {
                 return callback(null, results[0])
             }
         )
+    },
+    updateUserByUserName: (data, callback) => {
+        pool.query(
+            'UPDATE `account` set passWord = ? where userName = ?',
+            [
+                data.passWord,
+                data.userName
+            ],
+            (err, results) => {
+                if(err){
+                    return callback(err);
+                }
+                return callback(null,results);
+            }
+        )
     }
 }

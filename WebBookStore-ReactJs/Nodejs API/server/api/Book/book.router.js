@@ -6,8 +6,8 @@ const router = express.Router();
 
 
 router.get('/', getBook);
-router.get('/findbook', searchBookValidation, searchBook);
-router.get('/:id',getBookById)
+router.get('/:keyWord',  searchBook);
+router.get('/bookdetail/:id',getBookById)
 
 router.post('/', createBook);
 router.patch('/',updateBookValidation,updateBook);

@@ -11,7 +11,7 @@ bookdb.getBook = callback =>{
     });
 }
 
-bookdb.getBookById = (data, callback) => {
+bookdb.getBookById = (Id, callback) => {
     pool.query(
         'call USP_Get_Book_By_Id(?)',
         [Id],
@@ -82,7 +82,7 @@ bookdb.deleteBook = (data, callback) =>{
 bookdb.searchBook = (data, callback) => {
     pool.query(
         "CALL find_book(?)",
-        [data.keyWord],
+        [data],
         (err, results, fields) => {
             if(err){
                 return callback(err)

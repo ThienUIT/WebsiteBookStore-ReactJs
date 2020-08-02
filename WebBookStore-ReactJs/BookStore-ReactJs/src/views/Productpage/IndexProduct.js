@@ -4,211 +4,78 @@ import LandingPageHeader from 'components/Headers/LandingPageHeader'
 import { 
     Container, 
     Row, 
-    Col, 
-    Button, 
-    Card,
-    CardImg, 
-    CardBody, 
-    CardTitle, 
-    CardText, 
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
-    Label,
-    Input
+    Col
 } from 'reactstrap'
 import { connect } from 'react-redux'
 import { actFetchAllBookDataRequest } from 'redux/actions/FetchBookData'
-import { actAddToCart } from 'redux/actions/Cart'
 import DemoFooter from 'components/Footers/DemoFooter'
-import { isEmpty } from 'lodash'
-import BookCart from 'redux/reducers/BookCart'
+import { actFetchCategoryDataRequest } from 'redux/actions/FetchCategoryData'
+import ProductByCategory from './ProductByCategory'
 
+//services
+import GetRandomQoutes from 'services/GetRandomQuotes'
+import { QOUTES } from 'redux/actiontypes/ActionTypes'
 
 class IndexProduct extends Component {
     constructor(props){
         super(props)
         this.state = {
             isReload: false,    
-            Quotes:[
-                {
-                    id:1,
-                    Quote: "“Many people, myself among them, feel better at the mere sight of a book.”",
-                    Author: "- Jane Smiley -"
-                },
-                {
-                    id:2,
-                    Quote: "“′Classic′ – a book which people praise and don’t read.”",
-                    Author: "- Mark Twain -"
-                },
-                {
-                    id:3,
-                    Quote: "“Sleep is good, he said, and books are better.”",
-                    Author: "- George R.R. Martin -"
-                },
-                {
-                    id:4,
-                    Quote: "“The library is inhabited by spirits that come out of the pages at night.”",
-                    Author: "- Isabel Allende -"
-                },
-                {
-                    id:5,
-                    Quote: "“Rainy days should be spent at home with a cup of tea and a good book.”",
-                    Author: "- Bill Patterson -"
-                },
-                {
-                    id:6,
-                    Quote:"“No pen no gain.”",
-                    Author:"- Huan Rose -"
-                }
-            ]
+            isFavorite: false
         }
     }
     componentDidMount(){
         this.props.fetchAllBook();
-        // window.location.reload(false)
+        this.props.fetchCategory();
     }
-
-
-    addToCart = book =>{
-        this.props.onAddToCart(book)
-    }
-    test(){
-        console.log(document.getElementById('exampleRadios1').checked);
-   }
     render() {
+        var { url } = this.props.match
         var data = this.props.AllBook
-        var { BookCart } = this.props
-        // do {
-        //     window.location.reload()
-        // }while(isEmpty(BookCart))
-        const elm = data.map((book,index)=>{
-            return <Col key={book.bookID}>
-                        <Card style={{width: '20rem'}}>
-                            <CardImg 
-                                top 
-                                src={book.bookImage} 
-                                alt="..."/>
-                            <CardBody style={{height:"296px"}}>
-                                <CardTitle><h3>{book.title}</h3></CardTitle>
-                                <br></br>
-                                <CardText className="card-text">Author: {book.name}</CardText>
-                                <CardText className="card-text">Price: {book.price} $</CardText>
-                                <CardText></CardText>
-                                <Button onClick = {() => this.addToCart(book)} color="success" className="btn-icon btn-round">
-                                    <i className="fa fa-shopping-cart"></i>
-                                </Button>
-                            </CardBody>
-                        </Card>
-                </Col>
+        var {Category} = this.props
+        console.log(data)
+        var cate = Category.map((item,index)=>{
+            return <p key={index}>{item.categoryID}</p>
         })
+        var item = Category.map((category,index)=>{
+                    return <ProductByCategory 
+                                    key = {category.categoryID}
+                                    category = {category.categoryName}
+                                    books = {data}
+                                    url = {url}
+                            />
+        })
+        var quotes = GetRandomQoutes(QOUTES)
         return (
             <>
                 <IndexNavbar />
                 <LandingPageHeader />
                 <div className="section profile-content" >
                     <Container>
-                    <div className="owner">
-                        <div className="avatar">
-                        <img
-                            alt="library"
-                            className="img-rounded img-no-padding img-responsive"
-                            src={require("assets/img/library.png")}
-                        />
+                        <div className="owner">
+                            <div className="avatar">
+                            <img
+                                alt="library"
+                                className="img-rounded img-no-padding img-responsive"
+                                src={require("assets/img/library.png")}
+                            />
+                            </div>
+                            <div className="name">
+                            <h3 className="title">
+                                Book Shelf <br />
+                            </h3>
+                            </div>
                         </div>
-                        <div className="name">
-                        <h3 className="title">
-                            Book Shelf <br />
-                        </h3>
-                        </div>
-                    </div>
-                    <Row>
-                        <Col className="ml-auto mr-auto text-center" md="6">
-                        {RandomQoutes(this.state.Quotes)}
-                        <br />
-                        <br />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            <UncontrolledDropdown className="btn-group">
-                                <DropdownToggle
-                                aria-expanded={false}
-                                aria-haspopup={true}
-                                caret
-                                color="secondary"
-                                data-toggle="dropdown"
-                                type="button"
-                                >
-                                Category
-                                </DropdownToggle>
-                                <DropdownMenu>
-                                <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
-                                    Action
-                                </DropdownItem>
-                                <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
-                                    Another action
-                                </DropdownItem>
-                                <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
-                                    Something else here
-                                </DropdownItem>
-                                <DropdownItem divider />
-                                <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
-                                    Separated link
-                                </DropdownItem>
-                                </DropdownMenu>
-                            </UncontrolledDropdown>
-                        </Col>
-                        <Col >
-                            <h6>Sort by name</h6>
-                            <div className="form-check-radio">
-                                <Label check>
-                                <Input type="radio" name="sortByNameRadios" id="exampleRadios1" value="option1"defaultChecked/>
-                                    A to Z
-                                <span className="form-check-sign"></span>
-                                </Label>
-                            </div>
-                            <div className="form-check-radio">
-                                <Label check>
-                                <Input type="radio" name="sortByNameRadios" id="exampleRadios2" value="option2" />
-                                    Z to A
-                                <span className="form-check-sign"></span>
-                                </Label>
-                            </div>
-                        </Col>
-                        <Col>
-                            <h6>Sort by price</h6>
-                            <div className="form-check-radio">
-                                    <Label check>
-                                        <Input type="radio" name="exampleRadios" id="exampleRadios1" value="option3" defaultChecked/>
-                                        High to low
-                                        <span className="form-check-sign"></span>
-                                    </Label>
-                                </div>
-                                <div className="form-check-radio">
-                                    <Label check>
-                                    <Input type="radio" name="exampleRadios" id="exampleRadios2" value="option4" />
-                                    Low to high
-                                    <span className="form-check-sign"></span>
-                                    </Label>
-                            </div>
-                        </Col>
-                        <Col style={{textAlign: "center"}}>
-                            <Button color="success" style={{marginBottom:"5px"}} onClick={this.test}>
-                                <i className="fa fa-search"></i>
-                                Search
-                            </Button>
+                        <Row>
+                            <Col className="ml-auto mr-auto text-center" md="6">
+                            <p>{quotes.Quote} <br />
+                                <strong>{quotes.Author}</strong>
+                            </p>
                             <br />
-                            <Button color="primary">
-                                Refresh
-                            </Button>
-                        </Col>
-                    </Row>
-                    <hr></hr>
-                    <Row>
-                       {elm}
-                    </Row>
+                            <br />
+                            </Col>
+                        </Row>
+                        <hr></hr>
+                        {item}
                     </Container>
                 </div>
                 <DemoFooter />
@@ -217,22 +84,10 @@ class IndexProduct extends Component {
     }
 }
 
-const RandomQoutes = (store) =>{
-    var result = null;
-    if(store.length > 0){
-        var rand = Math.floor((Math.random() * store.length) + 0);
-        result = store[rand];
-    }
-    return  <p key={result.id}>
-                {result.Quote}<br />
-                <strong> {result.Author} </strong>
-            </p>
-}
-
 const mapStateToProps = state =>{
     return {
         AllBook : state.AllBook,
-        BookCart : state.BookCart
+        Category : state.Category
     }
 }
 
@@ -241,8 +96,8 @@ const mapDispatchToProps = dispatch =>{
         fetchAllBook : () =>{
             dispatch(actFetchAllBookDataRequest())
         },
-        onAddToCart: (book)=>{
-            dispatch(actAddToCart(book,1))
+        fetchCategory: ()=>{
+            dispatch(actFetchCategoryDataRequest())
         }
     }
 }

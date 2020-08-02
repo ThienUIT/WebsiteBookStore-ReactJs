@@ -35,11 +35,6 @@ const routes =[
         main :() => <IndexProduct/>
     },
     {
-        path: '/profile-page',
-        exact: false,
-        main :() => <ProfilePage/>
-    },
-    {
         path: '/admin-page',
         exact: false,
         main :() => <IndexAdmin/>

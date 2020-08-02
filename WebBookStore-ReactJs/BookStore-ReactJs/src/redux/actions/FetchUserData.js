@@ -1,4 +1,4 @@
-import {FETCH_USERDATA, SET_CURRENT_USER, LOGIN_FAIL, LOG_OUT} from '../actiontypes/ActionTypes'
+import {FETCH_USERDATA, SET_CURRENT_USER, LOGIN_FAIL} from '../actiontypes/ActionTypes'
 import CallApi from 'Utils/ApiCaller'
 import jwt from 'jsonwebtoken'
 

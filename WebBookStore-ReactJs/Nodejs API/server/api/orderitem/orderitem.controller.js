@@ -7,8 +7,8 @@ orderItemController.createOrderItem = (req, res) => {
 }
 
 orderItemController.getOrderItemByID = (req, res) => {
-    const body = req.body
-    getOrderItemByID(body, (err, results) => {
+    const id = parseInt(req.params.id)
+    getOrderItemByID(id, (err, results) => {
         if(err){
             console.log(err);
             return
@@ -16,7 +16,7 @@ orderItemController.getOrderItemByID = (req, res) => {
         else {
             return res.status(200).json({
                 success: 1,
-                data: results
+                data: results[0]
             });
         }
     })

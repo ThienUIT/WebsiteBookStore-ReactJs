@@ -1,7 +1,4 @@
-
-/*eslint-disable*/
 import React from "react";
-
 // reactstrap components
 import { Row, Container } from "reactstrap";
 
@@ -14,7 +11,7 @@ function DemoFooter() {
             <ul>
               <li>
                 <a
-                  href="#"
+                  href="https://www.creative-tim.com?ref=pkr-footer"
                   target="_blank"
                 >
                   Hazel
@@ -22,7 +19,7 @@ function DemoFooter() {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="http://blog.creative-tim.com/?ref=pkr-footer"
                   target="_blank"
                 >
                   Blog
@@ -30,7 +27,7 @@ function DemoFooter() {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="https://www.creative-tim.com/license?ref=pkr-footer"
                   target="_blank"
                 >
                   Licenses

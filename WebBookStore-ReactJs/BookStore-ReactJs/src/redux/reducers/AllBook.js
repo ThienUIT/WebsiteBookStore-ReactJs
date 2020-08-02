@@ -1,4 +1,4 @@
-import { FETCH_BOOKDATA, ADD_BOOK } from './../actiontypes/ActionTypes'
+import { FETCH_BOOKDATA, ADD_BOOK, UPDATE_BOOK } from './../actiontypes/ActionTypes'
 
 const initialState = []
 
@@ -10,6 +10,9 @@ export default function AllBook(state = initialState, action){
         case ADD_BOOK:
             state.push(action.book)
             return[...state]
+        case UPDATE_BOOK:
+            state = action.book
+            return [...state]
         default:
             return [...state]
     }

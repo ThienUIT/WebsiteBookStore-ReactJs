@@ -1,4 +1,4 @@
-import {FETCH_AUTHORDATA} from './../actiontypes/ActionTypes'
+import {FETCH_AUTHORDATA, ADD_AUTHOR} from './../actiontypes/ActionTypes'
 import CallApi from 'Utils/ApiCaller'
 
 
@@ -10,6 +10,22 @@ export const actFetchAuthorDataRequest = ()=>{
     }
 }
 
+export const actAddAuthorRequest = (author) => {
+    return dispatch =>{
+        return CallApi('authors','POST',author).then(res=>{
+            console.log(res.data)
+            dispatch(actAddAuthor(res.data))
+            window.location.reload();
+        })
+    }
+}
+
+export const actAddAuthor = (author) =>{
+    return{
+        type:ADD_AUTHOR,
+        author
+    }
+}
 
 export const actFetchAllAuthorData = (author) =>{
     return {

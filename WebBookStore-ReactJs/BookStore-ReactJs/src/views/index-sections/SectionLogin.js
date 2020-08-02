@@ -18,6 +18,7 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router";
 import { actLogin } from "redux/actions/FetchUserData";
 
+
 	// core components
 
 class SectionLogin extends React.Component {

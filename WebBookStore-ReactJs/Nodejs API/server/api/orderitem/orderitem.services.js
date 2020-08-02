@@ -21,10 +21,10 @@ orderItemDb.createOrderItem = (data, orderID ,callback) => {
     )
 }
 
-orderItemDb.getOrderItemByID = (data,callback) => {
+orderItemDb.getOrderItemByID = (id,callback) => {
     pool.query(
-        'SELECT *from orderitem WHERE orderID = ?',
-        [data.id],
+        'CALL USP_GetOrderDetail(?)',
+        [id],
         (err, results) => {
             if(err){
                 return callback(err)

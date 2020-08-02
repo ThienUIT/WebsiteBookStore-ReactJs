@@ -10,6 +10,7 @@ import {ReactComponent as Receipt} from '../../assets/img/receipt-solid.svg'
 import Order from './Order';
 import SuccessModal from '../Modal/SuccessModal';
 import { Redirect } from 'react-router';
+import UserInfo from './UserInfo';
 
 
 class IndexCart extends Component {
@@ -60,7 +61,6 @@ class IndexCart extends Component {
             }
             console.log(data.userID)
             CallApi('order/createorder','POST', data).then(res =>{
-                console.log(res.data)
                 this.setState({
                     SetModal: true
                 })
@@ -130,17 +130,29 @@ class IndexCart extends Component {
                                 </NavLink>
                             </NavItem>
                             <NavItem>
-                                    <NavLink
-                                        className={this.state.activeTab === "2" ? "active" : ""}
-                                        onClick={() => {
-                                        toggle("2");
-                                        }}
-                                        style = {{fontSize:'20px',fontWeight:'bold',cursor:"pointer"}}
-                                    >
-                                        <Receipt style={{width:'20px',height:'20px',verticalAlign:'unset',marginRight:'5px'}} />
-                                        Order
-                                    </NavLink>
-                                </NavItem>
+                                <NavLink
+                                    className={this.state.activeTab === "2" ? "active" : ""}
+                                    onClick={() => {
+                                    toggle("2");
+                                    }}
+                                    style = {{fontSize:'20px',fontWeight:'bold',cursor:"pointer"}}
+                                >
+                                    <Receipt style={{width:'20px',height:'20px',verticalAlign:'unset',marginRight:'5px'}} />
+                                    Order
+                                </NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink
+                                    className={this.state.activeTab === "3" ? "active" : ""}
+                                    onClick={() => {
+                                    toggle("3");
+                                    }}
+                                    style = {{fontSize:'20px',fontWeight:'bold',cursor:"pointer"}}
+                                >
+                                    <i className="fa fa-user"></i>&nbsp;
+                                    Info
+                                </NavLink>
+                            </NavItem>
                         </Nav>
                         </div>
                     </div>
@@ -163,7 +175,10 @@ class IndexCart extends Component {
                                         </thead>
                                         <Order />
                                     </Table>
-                                </TabPane>
+                            </TabPane>
+                            <TabPane className="text-center" tabId="3">
+                                    <UserInfo userInfo = {this.props.Auth.user} />
+                            </TabPane>
                         </TabContent>
                     </Container>
                 </div>
@@ -260,6 +275,18 @@ class IndexCart extends Component {
                                         Order
                                     </NavLink>
                                 </NavItem>
+                                <NavItem>
+                                    <NavLink
+                                        className={this.state.activeTab === "3" ? "active" : ""}
+                                        onClick={() => {
+                                        toggle("3");
+                                        }}
+                                        style = {{fontSize:'20px',fontWeight:'bold',cursor:"pointer"}}
+                                    >
+                                        <i className="fa fa-user"></i>&nbsp;
+                                        Info
+                                    </NavLink>
+                                </NavItem>
                             </Nav>
                             
                             </div>
@@ -293,6 +320,9 @@ class IndexCart extends Component {
                                         </thead>
                                         <Order />
                                     </Table>
+                                </TabPane>
+                                <TabPane className="text-center" tabId="3">
+                                    <UserInfo userInfo = {this.props.Auth.user} />
                                 </TabPane>
                             </TabContent>
                             <hr></hr>

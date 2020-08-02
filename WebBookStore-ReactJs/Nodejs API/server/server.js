@@ -1,5 +1,5 @@
 const express = require('express');
-
+const cors = require('cors')
 // biến môi trường env
 require('dotenv').config();
 //express-session
@@ -20,6 +20,7 @@ const orderItemRouter = require('./api/orderitem/orderitem.route')
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 
 

@@ -1,4 +1,4 @@
-const { create, getUser, getUserByUsername } = require('./user.services')
+const { create, getUser, getUserByUsername, updateUserByUserName } = require('./user.services')
 const {hashSync, genSaltSync, compareSync} = require('bcrypt')
 // const { sign } = require('crypto')
 const { sign } = require('jsonwebtoken')
@@ -16,7 +16,7 @@ module.exports = {
             }
             return res.status(200).json({
                 success: 1,
-                message: 'Create account with order successfully'
+                message: results
             });
         } )
     },
@@ -33,11 +33,14 @@ module.exports = {
         })
     },
     getUserByUsername: (req, res) =>{
-        const body = req.body;
-        getUserByUsername(body.username,(err, results)=>{
+        const name = req.params.name;
+        getUserByUsername(name,(err, results)=>{
             if(err){
                 console.log(err);
                 return;
+            }
+            else{
+
             }
             return  res.json({
                 success: 0,
@@ -77,6 +80,21 @@ module.exports = {
                 });
             }
 
+        })
+    },
+    updateUser: (req, res)=>{
+        const body = req.body;
+        const salt = genSaltSync(10)
+        body.passWord = hashSync(body.passWord, salt)
+        updateUserByUserName(body, (err, results)=>{
+            if(err){
+                console.log(err);
+                return;
+            }
+            else return res.status(200).json({
+                success:1,
+                data: results
+            });
         })
     }
 }

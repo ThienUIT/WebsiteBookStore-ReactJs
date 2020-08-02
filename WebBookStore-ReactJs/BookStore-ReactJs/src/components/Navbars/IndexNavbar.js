@@ -1,3 +1,21 @@
+/*!
+
+    =========================================================
+    * Paper Kit React - v1.0.0
+    =========================================================
+
+    * Product Page: https://www.creative-tim.com/product/paper-kit-react
+
+    * Copyright 2019 Creative Tim (https://www.creative-tim.com)
+    * Licensed under MIT (https://github.com/creativetimofficial/paper-kit-react/blob/master/LICENSE.md)
+
+    * Coded by Creative Tim
+
+    =========================================================
+
+    * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+    */
 import React from "react";
 // nodejs library that concatenates strings
 import classnames from "classnames";
@@ -20,6 +38,12 @@ import { actLogout } from "redux/actions/FetchUserData";
 import jwt from 'jsonwebtoken'
 import { reloadCart } from "redux/actions/Cart";
 import { isEmpty } from "lodash";
+import {ReactComponent as LoginIcon} from '../../assets/img/login.svg'
+import {ReactComponent as LogoutIcon} from '../../assets/img/logout.svg'
+import {ReactComponent as HeartIcon} from '../../assets/img/heart.svg'
+import {ReactComponent as AdminIcon} from '../../assets/img/admin.svg'
+import {ReactComponent as UserIcon} from '../../assets/img/user.svg'
+import SearchBar from "components/SearchBar/SearchBar";
 // helper function
 const ShowQuantity = (cart) => {
   var result = 0;
@@ -61,11 +85,6 @@ function IndexNavbar(props) {
     window.location.reload(false);
   }
 
-  const updateState = (params) =>{
-    if(localStorage.getItem('jwtToken') !== null){
-      setReload(params)
-    }
-  };
   
   const toggleNavbarCollapse = () => {
     setNavbarCollapse(!navbarCollapse);
@@ -126,6 +145,7 @@ function IndexNavbar(props) {
             <span className="navbar-toggler-bar bar3" />
           </button>
         </div>
+        <SearchBar />
         <Collapse
           className="justify-content-end"
           navbar
@@ -172,13 +192,19 @@ function IndexNavbar(props) {
                             to="/login-page"
                             style = { ( localStorage.getItem('jwtToken') !== null ) ? { pointerEvents: "none" } : {} }
                         >
+                            <LoginIcon style={{width:'25px', height:'25px'}} />&nbsp;
                             Login
                         </Link>
                         {LinkToAdminPage()}
                         <DropdownItem
                             onClick={onclicked}
                         >
+                            <LogoutIcon style={{width:'25px', height:'25px'}} />&nbsp;
                             Log out
+                        </DropdownItem>
+                        <DropdownItem >
+                            <HeartIcon style={{width:'25px', height:'25px'}} />&nbsp;
+                            Favorite list
                         </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
@@ -187,6 +213,7 @@ function IndexNavbar(props) {
                 className="nav-link"
                 data-placement="bottom"
                 to="/register-page"
+                style = { ( localStorage.getItem('jwtToken') !== null ) ? { pointerEvents: "none" } : {} }
               >
                 <i className="fa fa-key"></i>
                 Register
@@ -221,9 +248,18 @@ const LinkToAdminPage = () =>{
                       data-placement="bottom"
                       to="/admin-page"
                   >
+                      <AdminIcon style={{width:'25px', height:'25px'}} />&nbsp;
                       Admin
                   </Link>
         }
+        else return <Link
+                        className="dropdown-item"
+                        data-placement="bottom"
+                        to=""
+                    >
+                        <UserIcon style={{width:'25px', height:'25px'}} />&nbsp;
+                        User info
+                    </Link>
     }
     else return <div></div>
   }
@@ -232,6 +268,7 @@ const LinkToAdminPage = () =>{
 const mapStateToProps = (state) => {
   return {
     BookCart: state.BookCart,
+    Favorite: state.Favorite
   };
 };
 
